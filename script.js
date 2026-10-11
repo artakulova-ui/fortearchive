@@ -22,7 +22,7 @@ async function fetchProductsFromFirebase() {
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">Loading archive...</div>';
 
     try {
-        const snapshot = await db.collection("products").get();
+        const snapshot = await db.collection("items").get();
         products = [];
 
         snapshot.forEach(doc => {
@@ -37,6 +37,12 @@ async function fetchProductsFromFirebase() {
         console.error("Error fetching products:", error);
         grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">Failed to load products.</div>';
     }
+}
+
+function getProductImages(product) {
+    return Array.isArray(product.images)
+        ? product.images.filter(imageUrl => typeof imageUrl === 'string' && imageUrl.trim())
+        : [];
 }
 
 // Рендер товаров в галерею (берет первое фото из массива как обложку)
@@ -56,57 +62,64 @@ function renderProducts(items) {
         card.className = 'product-card';
         card.onclick = () => openModal(product);
 
-        // Берем первое фото из массива images, либо fallback, либо старое поле image если оно осталось
-        const coverImage = (Array.isArray(product.images) && product.images.length > 0)
-            ? product.images[0]
-            : (product.image || 'https://via.placeholder.com/400x500?text=FORTE');
+        const images = getProductImages(product);
 
         const stockText = product.status === 'In Stock'
             ? `In Stock (${product.stock || 1})`
             : (product.status || 'Sold Out');
 
         card.innerHTML = `
-            <img src="${coverImage}" alt="${product.title}">
             <div class="product-info">
                 <div class="product-title">${product.title}</div>
                 <div class="product-price" style="font-size: 13px; color: ${product.status === 'In Stock' ? '#2e7d32' : '#c62828'};">${stockText}</div>
             </div>
         `;
+
+        if (images.length > 0) {
+            const coverImage = document.createElement('img');
+            coverImage.src = images[0];
+            coverImage.alt = product.title || '';
+            card.prepend(coverImage);
+        }
+
         grid.appendChild(card);
     });
 }
 
 // Модальное окно с поддержкой галереи нескольких фото
 function openModal(product) {
-    // Собираем массив картинок (поддерживаем и новый массив images, и старое поле image)
-    let imgs = [];
-    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
-        imgs = product.images;
-    } else if (product.image) {
-        imgs = [product.image];
-    } else {
-        imgs = ['https://via.placeholder.com/400x500?text=FORTE'];
+    const images = getProductImages(product);
+    const imageContainer = document.querySelector('.modal-image');
+
+    if (imageContainer) {
+        imageContainer.replaceChildren();
+
+        if (images.length > 0) {
+            const mainImage = document.createElement('img');
+            mainImage.id = 'modalImg';
+            mainImage.src = images[0];
+            mainImage.alt = product.title || '';
+            imageContainer.appendChild(mainImage);
+
+            if (images.length > 1) {
+                const thumbnails = document.createElement('div');
+                thumbnails.style.cssText = 'display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;';
+
+                images.forEach(imageUrl => {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = imageUrl;
+                    thumbnail.alt = product.title || '';
+                    thumbnail.style.cssText = 'width:60px;height:75px;object-fit:cover;cursor:pointer;border:1px solid #ddd;';
+                    thumbnail.addEventListener('click', () => {
+                        mainImage.src = imageUrl;
+                    });
+                    thumbnails.appendChild(thumbnail);
+                });
+
+                imageContainer.appendChild(thumbnails);
+            }
+        }
     }
-
-    // Рендерим главное фото и миниатюры (или список фото) в модалке
-    // Если на вашей странице modalImg — это просто тег <img>, мы можем заменить его контейнером галереи
-    const modalImageElement = document.getElementById('modalImg');
-    modalImageElement.src = imgs[0]; // Первое фото по умолчанию
-
-    // Если у товара несколько фото, выводим их вертикально или горизонтально под главным
-    let galleryHtml = `<img id="modalImg" src="${imgs[0]}" alt="${product.title}" style="width:100%; display:block; margin-bottom: 10px;">`;
-
-    if (imgs.length > 1) {
-        galleryHtml += `<div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">`;
-        imgs.forEach((imgUrl) => {
-            galleryHtml += `<img src="${imgUrl}" onclick="document.getElementById('modalImg').src='${imgUrl}'" style="width: 60px; height: 75px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; transition: border-color 0.2s;" onmouseover="this.style.borderColor='#000'" onmouseout="this.style.borderColor='#ddd'">`;
-        });
-        galleryHtml += `</div>`;
-    }
-
-    // Вставляем галерею внутрь контейнера картинки в модалке
-    const imgWrapper = modalImageElement.closest('.modal-image-container') || modalImageElement.parentElement;
-    imgWrapper.innerHTML = galleryHtml;
 
     document.getElementById('modalTitle').innerText = product.title || '';
     document.getElementById('modalCategory').innerText = product.category || '';
