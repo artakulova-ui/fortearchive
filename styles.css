@@ -1,0 +1,262 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: #fcfcfc;
+    color: #111;
+    line-height: 1.6;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 5%;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    font-weight: 300;
+    color: #666;
+}
+
+.nav-links a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: #444;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #000;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+/* Archive & Filters */
+.archive-header {
+    margin-bottom: 30px;
+    padding-top: 8px;
+}
+
+.archive-header h2 {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.subtitle {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    margin-bottom: 18px;
+}
+
+.filter-btn {
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    background-color: #f5f5f5;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    padding: 30px;
+    border-radius: 4px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.modal-image {
+    flex: 1;
+    min-width: 280px;
+}
+
+.modal-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.modal-details {
+    flex: 1;
+    min-width: 280px;
+}
+
+.modal-category {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.modal-price {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.modal-description {
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.btn-primary, .btn-paypal {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+/* Info Pages */
+.text-content {
+    max-width: 700px;
+}
+
+.text-content h2 {
+    margin-bottom: 20px;
+}
+
+.info-block {
+    margin-bottom: 30px;
+}
+
+.contact-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.contact-list li {
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 0.8rem;
+    color: #888;
+    border-top: 1px solid #eee;
+    margin-top: 60px;
+}

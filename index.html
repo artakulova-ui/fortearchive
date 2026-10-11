@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COP COPINE ARCHIVE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">FORTE <span>/ ARCHIVE</span></div>
+        <nav class="nav-links">
+            <a href="#archive" onclick="showSection('archive')">Archive</a>
+            <a href="#payment" onclick="showSection('payment')">Payment & Shipping</a>
+            <a href="#contact" onclick="showSection('contact')">Contact</a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <!-- ARCHIVE SECTION -->
+        <section id="archive" class="page-section active">
+            <div class="archive-header">
+                <h2>ARCHIVE COLLECTION</h2>
+                <p class="subtitle">Vintage & archival pieces by Cop Copine</p>
+                <!-- Filter Buttons -->
+                <div class="filters">
+                    <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+                    <button class="filter-btn" onclick="filterCategory('tops')">Tops</button>
+                    <button class="filter-btn" onclick="filterCategory('jackets')">Jackets</button>
+                    <button class="filter-btn" onclick="filterCategory('dresses')">Dresses</button>
+                    <button class="filter-btn" onclick="filterCategory('skirts')">Skirts</button>
+                    <button class="filter-btn" onclick="filterCategory('trousers')">Trousers</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="productGrid">
+                <!-- Products dynamically inserted via JavaScript -->
+            </div>
+        </section>
+
+        <!-- PAYMENT & SHIPPING SECTION -->
+        <section id="payment" class="page-section">
+            <div class="text-content">
+                <h2>PAYMENT & SHIPPING</h2>
+                <div class="info-block">
+                    <h3>Payment Methods</h3>
+                    <p>We accept payments securely via PayPal. Once you select an item from our archive, click the payment button on the item card or contact us directly to confirm availability before completing payment.</p>
+                    <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" class="btn-paypal">Pay with PayPal.me</a>
+                </div>
+                <div class="info-block">
+                    <h3>Worldwide Shipping</h3>
+                    <p>All items are shipped within 1–3 business days with tracking provided. International delivery times vary by destination.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="page-section">
+            <div class="text-content">
+                <h2>CONTACT</h2>
+                <p>Have questions about sizing, garment condition, or custom shipping options? Reach out to us directly:</p>
+                <ul class="contact-list">
+                    <li><strong>Instagram:</strong> <a href="#" target="_blank">@your_instagram</a></li>
+                    <li><strong>Email:</strong> archive@copcopine-vault.com</li>
+                    <li><strong>PayPal:</strong> paypal.me/YOUR_PAYPAL_USERNAME</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImg" src="" alt="Product Image">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-category" id="modalCategory">Category</p>
+                    <h2 id="modalTitle">Item Title</h2>
+                    <p class="modal-price" id="modalPrice">$0.00</p>
+                    <div class="modal-description">
+                        <h4>Description & Condition</h4>
+                        <p id="modalDesc">Detailed description will appear here...</p>
+                        <p><strong>Size:</strong> <span id="modalSize">M</span></p>
+                    </div>
+                    <!-- Кнопка перехода к контактам -->
+                    <button id="modalPayBtn" class="btn-primary" onclick="inquireProduct()">INQUIRE TO BUY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Cop Copine Archive Vault. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
