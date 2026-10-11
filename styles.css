@@ -11,6 +11,10 @@ body {
     line-height: 1.6;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 /* Navigation */
 .navbar {
     display: flex;
@@ -158,6 +162,8 @@ body {
     z-index: 1000;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-content {
@@ -167,6 +173,12 @@ body {
     position: relative;
     padding: 30px;
     border-radius: 4px;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 .close-btn {

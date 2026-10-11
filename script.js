@@ -120,6 +120,7 @@ function openModal(product) {
     document.getElementById('modalDesc').innerText = product.description || '';
     document.getElementById('modalSize').innerText = product.size || '';
     document.getElementById('productModal').style.display = 'flex';
+    document.body.classList.add('modal-open');
 }
 
 // Фильтрация по категориям
@@ -149,6 +150,7 @@ function showSection(sectionId) {
 
 function closeModal() {
     document.getElementById('productModal').style.display = 'none';
+    document.body.classList.remove('modal-open');
 }
 
 // Переход со страницы товара к разделу Контактов
